@@ -26,6 +26,10 @@ public class StudentController {
         }
     }
 
-
+    @DeleteMapping("/{id}")
+    public ApiResult deleteStudent(@PathVariable Integer id){
+        studentService.deleteStudent(id);
+        return ApiResultHandler.buildApiResult(200,"请求成功",null);
+    }
 
 }
