@@ -30,4 +30,19 @@ public class StudentServiceImpl implements StudentService {
         dbStudent.setToken(token);
         return dbStudent;
     }
+
+    @Override
+    public void addStudent(Student student) {
+
+    }
+
+    @Override
+    public void deleteStudent(Integer id) {
+
+    }
+
+    @Override
+    public void updateStudent(Student student) {
+
+    }
 }
