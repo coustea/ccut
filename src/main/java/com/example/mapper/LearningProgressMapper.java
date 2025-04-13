@@ -1,20 +1,26 @@
 package com.example.mapper;
 
 import com.example.entity.LearningProgress;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface LearningProgressMapper {
 
-    void insert(LearningProgress learningProgress);
+    int insert(LearningProgress learningProgress);
 
-    void update(LearningProgress learningProgress);
+    int update(LearningProgress learningProgress);
 
-    void deleteById(Integer id);
+    int deleteById(@Param("id") Integer id);
 
-    LearningProgress findById(Integer id);
+    Optional<LearningProgress> findById(@Param("id") Integer id);
 
     List<LearningProgress> findAll();
 
-    List<LearningProgress> findByStudentId(Long studentId);
+    List<LearningProgress> findByStudentId(@Param("studentId") Long studentId);
+
+    Optional<LearningProgress> findByStudentIdAndCourseId(
+            @Param("studentId") Long studentId,
+            @Param("courseId") Long courseId);
 }

@@ -1,21 +1,23 @@
 package com.example.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class LearningProgress {
     @Getter
     public enum Status {
-        not_started(0), in_progress(1), paused(2), completed(3);
+        NOT_STARTED(0),
+        IN_PROGRESS(1),
+        PAUSED(2),
+        COMPLETED(3);
 
         private final int code;
+
         Status(int code) {
             this.code = code;
         }
@@ -26,7 +28,7 @@ public class LearningProgress {
                     return status;
                 }
             }
-            throw new IllegalArgumentException("无效状态码： " + code);
+            throw new IllegalArgumentException("无效状态码: " + code);
         }
     }
 
