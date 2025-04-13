@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.LearningProgressMapper">
+
+    <resultMap id="LearningResultMap" type="com.example.entity.LearningProgress">
+        <id property="id" column="id"/>
+        <result property="studentId" column="student_id"/>
+        <result property="courseId" column="course_id"/>
+        <result property="completionPercentage" column="completion_percentage"/>
+        <result property="status" column="status" typeHandler="com.example.utils.StatusTypeHandler"/>
+
+        <association property="student" column="student_id"
+                     select="com.example.mapper.StudentMapper.findById" fetchType="lazy"/>
+        <association property="course" column="course_id"
+                     select="com.example.mapper.CourseMapper.findById" fetchType="lazy"/>
+    </resultMap>
+
+    <insert id="insert">
+        insert into `learning_progress` (student_id, course_id, completion_percentage, status)
+        values (#{studentId}, #{courseId}, #{completionPercentage}, #{status})
+    </insert>
+
+    <update id="update">
+        update `learning_progress`
+        <set>
+            <if test="studentId != null">student_id = #{studentId},</if>
+            <if test="courseId != null">course_id = #{courseId},</if>
+            <if test="completionPercentage != null">completion_percentage = #{completionPercentage},</if>
+            <if test="status != null">status = #{status},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        delete from `learning_progress` where id = #{id}
+    </delete>
+
+    <select id="findById" resultMap="LearningResultMap">
+        select * from `learning_progress` where id = #{id}
+    </select>
+
+    <select id="findAll" resultMap="LearningResultMap">
+        select * from `learning_progress`
+    </select>
+
+    <select id="findByStudentId" resultMap="LearningResultMap">
+        select * from `learning_progress` where student_id = #{studentId}
+    </select>
+</mapper>

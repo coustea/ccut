@@ -15,4 +15,5 @@ public class Teacher {
     private String name;
     private String phone;
     private String role;
+    private String token;
 }

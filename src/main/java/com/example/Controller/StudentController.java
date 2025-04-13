@@ -2,7 +2,7 @@ package com.example.Controller;
 
 import com.example.entity.ApiResult;
 import com.example.entity.Student;
-import com.example.service.impl.StudentServiceImpl;
+import com.example.service.StudentService;
 import com.example.utils.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class StudentController {
 
     @Autowired
-    private StudentServiceImpl studentService;
+    private StudentService studentService;
 
     @PutMapping("/{id}")
     public ApiResult updateStudent(@PathVariable Integer id,@RequestBody Student student){

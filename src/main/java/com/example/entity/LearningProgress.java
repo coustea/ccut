@@ -5,17 +5,17 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class Course {
+@NoArgsConstructor
+public class LearningProgress {
     @Getter
     public enum Status {
-        pending(0), active(1), completed(2), cancelled(3);
+        not_started(0), in_progress(1), paused(2), completed(3);
 
         private final int code;
-
         Status(int code) {
             this.code = code;
         }
@@ -26,15 +26,17 @@ public class Course {
                     return status;
                 }
             }
-            throw new IllegalArgumentException("Invalid status code: " + code);
+            throw new IllegalArgumentException("无效状态码： " + code);
         }
     }
 
     private Integer id;
-    private String title;
-    private String term;
+    private BigDecimal completionPercentage;
     private Status status;
-    private Long teacherId;
+    private Long studentId;
+    private Long courseId;
 
-    private Teacher teacher;
+    // 关联对象
+    private Student student;
+    private Course course;
 }
