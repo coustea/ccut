@@ -1,18 +1,20 @@
 package com.example.mapper;
 
 import com.example.entity.Course;
+import com.example.entity.Course.Status;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 public interface CourseMapper {
 
-    void insert(Course course);
+    int insert(Course course);
 
-    void update(Course course);
+    int deleteById(@Param("id") Integer id);
 
-    void deleteById(Integer id);
+    int updateById(Course course);
 
-    Course findById(Integer id);
+    List<Course> findAll(Course course);
 
-    List<Course> findAll();
+    List<Course> findByStatus(@Param("status") Status status);
 }

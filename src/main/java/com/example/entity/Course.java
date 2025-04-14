@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Course {
     @Getter
     public enum Status {
-        pending(0), active(1), completed(2), cancelled(3);
+        PENDING(0), ACTIVE(1), COMPLETED(2), CANCELLED(3);
 
         private final int code;
 

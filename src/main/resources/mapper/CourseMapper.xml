@@ -20,7 +20,7 @@
         values (#{title}, #{term}, #{status}, #{teacherId})
     </insert>
 
-    <update id="update">
+    <update id="updateById">
         update `course`
         <set>
             <if test="title != null">title = #{title},</if>
@@ -35,12 +35,25 @@
         delete from `course` where id = #{id}
     </delete>
 
-    <select id="findById" resultMap="courseResultMap">
-        select * from `course` where id = #{id}
-    </select>
-
     <select id="findAll" resultMap="courseResultMap">
         select * from `course`
+        <where>
+            <if test="title != null and title != ''">
+                and title like concat('%', #{title}, '%')
+            </if>
+            <if test="term != null and term != ''">
+                and term like concat('%', #{term}, '%')
+            </if>
+            <if test="teacher != null">
+                and teacher_id = #{teacher.id}
+            </if>
+        </where>
+    </select>
+
+    <select id="findByStatus" resultMap="courseResultMap">
+        select *
+        from `course`
+        where status = #{status,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}
     </select>
 
 </mapper>

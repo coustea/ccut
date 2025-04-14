@@ -38,7 +38,7 @@ public class StudentService {
     }
     //删除学生
     public void deleteStudent(Integer id) {
-        studentMapper.delete(id);
+        studentMapper.deleteById(id);
     }
     //修改学生
     public void updateStudent(Student student) {
@@ -51,5 +51,4 @@ public class StudentService {
         List<Student> list = studentMapper.selectAll(student);
         return PageInfo.of(list);
     }
-
 }

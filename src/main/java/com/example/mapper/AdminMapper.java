@@ -8,15 +8,16 @@ import java.util.List;
 
 public interface AdminMapper {
 
-    @Select("select * from `admin` where username = #{username}")
-    Admin selectByUsername(String username);
 
-    void insert(Admin admin);
+    int insert(Admin admin);
 
     @Delete("delete  from `admin` where id = #{id}")
-    void delete(Admin admin);
+    int delete(Admin admin);
 
-    void updateById(Admin admin);
+    int updateById(Admin admin);
+
+    @Select("select * from `admin` where username = #{username}")
+    Admin selectByUsername(String username);
 
     List<Admin> selectAll(Admin admin);
 }
