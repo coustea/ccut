@@ -38,7 +38,6 @@ public class LearningProgress {
     private Long studentId;
     private Long courseId;
 
-    // 关联对象
     private Student student;
     private Course course;
 }

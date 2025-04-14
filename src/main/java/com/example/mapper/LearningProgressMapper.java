@@ -10,13 +10,9 @@ public interface LearningProgressMapper {
 
     int insert(LearningProgress learningProgress);
 
-    int update(LearningProgress learningProgress);
+    int updateById(LearningProgress learningProgress);
 
-    int deleteById(@Param("id") Integer id);
-
-    Optional<LearningProgress> findById(@Param("id") Integer id);
-
-    List<LearningProgress> findAll();
+    List<LearningProgress> findAll(LearningProgress learningProgress);
 
     List<LearningProgress> findByStudentId(@Param("studentId") Long studentId);
 

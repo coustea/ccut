@@ -10,7 +10,8 @@
         <result property="studentId" column="student_id"/>
         <result property="courseId" column="course_id"/>
         <result property="completionPercentage" column="completion_percentage"/>
-        <result property="status" column="status" typeHandler="com.example.utils.StatusTypeHandler"/>
+        <result property="status" column="status" typeHandler="org.apache.ibatis.type.EnumTypeHandler"
+                jdbcType="INTEGER" javaType="com.example.entity.LearningProgress$Status"/>
 
         <association property="student" column="student_id"
                      select="com.example.mapper.StudentMapper.findById" fetchType="lazy"/>
@@ -18,29 +19,27 @@
                      select="com.example.mapper.CourseMapper.findById" fetchType="lazy"/>
     </resultMap>
 
-    <insert id="insert">
-        insert into `learning_progress` (student_id, course_id, completion_percentage, status)
-        values (#{studentId}, #{courseId}, #{completionPercentage}, #{status})
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into `learning_progress`
+            (student_id, course_id, completion_percentage, status)
+        values
+            (#{studentId}, #{courseId}, #{completionPercentage}, #{status, typeHandler=org.apache.ibatis.type.EnumTypeHandler})
     </insert>
 
-    <update id="update">
+    <update id="updateById">
         update `learning_progress`
         <set>
             <if test="studentId != null">student_id = #{studentId},</if>
             <if test="courseId != null">course_id = #{courseId},</if>
             <if test="completionPercentage != null">completion_percentage = #{completionPercentage},</if>
-            <if test="status != null">status = #{status},</if>
+            <if test="status != null">status = #{status, typeHandler=org.apache.ibatis.type.EnumTypeHandler},</if>
+
+            <if test="studentId == null and courseId == null and completionPercentage == null and status == null">
+                status = status
+            </if>
         </set>
         where id = #{id}
     </update>
-
-    <delete id="deleteById">
-        delete from `learning_progress` where id = #{id}
-    </delete>
-
-    <select id="findById" resultMap="LearningResultMap">
-        select * from `learning_progress` where id = #{id}
-    </select>
 
     <select id="findAll" resultMap="LearningResultMap">
         select * from `learning_progress`
@@ -48,5 +47,11 @@
 
     <select id="findByStudentId" resultMap="LearningResultMap">
         select * from `learning_progress` where student_id = #{studentId}
+    </select>
+
+    <select id="findByStudentIdAndCourseId" resultMap="LearningResultMap">
+        select * from `learning_progress`
+        where student_id = #{studentId} and course_id = #{courseId}
+        limit 1
     </select>
 </mapper>
