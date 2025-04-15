@@ -7,6 +7,7 @@ import com.example.utils.TakenUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Service
 public class AdminService {
 
-    @Resource
+    @Autowired
     AdminMapper adminMapper;
 
     //管理员登陆
@@ -33,16 +34,18 @@ public class AdminService {
         return dbAdmin;
     }
     //添加管理员
-    public void addAdmin(Admin admin) {
-        adminMapper.insert(admin);
+    public int addAdmin(Admin admin) {
+
+        return adminMapper.insert(admin);
     }
     //删除管理员
-    public void deleteAdmin(Integer id) {
-        adminMapper.deleteById(id);
+    public int deleteAdmin(Integer id) {
+
+        return adminMapper.deleteById(id);
     }
     //修改学生
-    public void updateAdmin(Admin admin) {
-        adminMapper.updateById(admin);
+    public int updateAdmin(Admin admin) {
+        return adminMapper.updateById(admin);
 
     }
     //分页查询

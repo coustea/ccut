@@ -33,16 +33,17 @@ public class StudentService {
         return dbStudent;
     }
     //添加学生
-    public void addStudent(Student student) {
-        studentMapper.insert(student);
+    public int addStudent(Student student) {
+        return studentMapper.insert(student);
     }
     //删除学生
-    public void deleteStudent(Integer id) {
-        studentMapper.deleteById(id);
+    public int deleteStudent(Integer id) {
+
+        return studentMapper.deleteById(id);
     }
     //修改学生
-    public void updateStudent(Student student) {
-        studentMapper.updateById(student);
+    public int updateStudent(Student student) {
+       return studentMapper.updateById(student);
 
     }
     //分页查询
