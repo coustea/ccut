@@ -21,6 +21,9 @@ public interface StudentMapper {
     @Select("select * from `student` where username = #{username}")
     Student selectByUsername(String username);
 
+    @Select("select * from `student` where id = #{id}")
+    Student selectById(Integer id);
+
     List<Student> selectAll(Student student);
 
 }
