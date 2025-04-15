@@ -33,16 +33,17 @@ public class TeacherService {
         return dbTeacher;
     }
     //添加教师
-    public void addTeacher(Teacher teacher) {
-        teacherMapper.insert(teacher);
+    public int addTeacher(Teacher teacher) {
+
+        return teacherMapper.insert(teacher);
     }
     //删除教师
-    public void deleteTeacher(Integer id) {
-        teacherMapper.delete(id);
+    public int deleteTeacher(Integer id) {
+       return teacherMapper.delete(id);
     }
     //修改教师
-    public void updateTeacher(Teacher teacher) {
-        teacherMapper.updateById(teacher);
+    public int updateTeacher(Teacher teacher) {
+       return teacherMapper.updateById(teacher);
 
     }
     //分页查询

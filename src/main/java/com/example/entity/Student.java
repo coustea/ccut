@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class Student extends User{
     private String academe;
     private String classname;
+    private String phone;
 }

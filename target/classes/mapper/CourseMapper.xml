@@ -4,59 +4,59 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.mapper.CourseMapper">
 
-    <resultMap id="courseResultMap" type="com.example.entity.Course">
-        <id property="id" column="id"/>
-        <result property="title" column="title"/>
-        <result property="term" column="term"/>
-        <result property="status" column="status" typeHandler="com.example.utils.StatusTypeHandler"/>
-        <result property="teacherId" column="teacher_id"/>
+<!--    <resultMap id="courseResultMap" type="com.example.entity.Course">-->
+<!--        <id property="id" column="id"/>-->
+<!--        <result property="title" column="title"/>-->
+<!--        <result property="term" column="term"/>-->
+<!--        <result property="status" column="status" typeHandler="com.example.utils.StatusTypeHandler"/>-->
+<!--        <result property="teacherId" column="teacher_id"/>-->
 
-        <association property="id" column="teacher_id"
-                     select="com.example.mapper.TeacherMapper.selectById" fetchType="lazy"/>
-    </resultMap>
+<!--        <association property="id" column="teacher_id"-->
+<!--                     select="com.example.mapper.TeacherMapper.selectById" fetchType="lazy"/>-->
+<!--    </resultMap>-->
 
-    <insert id="insert">
-        insert into `course` (title, term, status, teacher_id)
-        values (#{title}, #{term}, #{status}, #{teacherId})
-    </insert>
+<!--    <insert id="insert">-->
+<!--        insert into `course` (title, term, status, teacher_id)-->
+<!--        values (#{title}, #{term}, #{status}, #{teacherId})-->
+<!--    </insert>-->
 
-    <update id="updateById">
-        update `course`
-        <set>
-            <if test="title != null">title = #{title},</if>
-            <if test="term != null">term = #{term},</if>
-            <if test="status != null">status = #{status},</if>
-            <if test="teacher != null">teacher_id = #{teacher.id},</if>
-        </set>
-        where id = #{id}
-    </update>
+<!--    <update id="updateById">-->
+<!--        update `course`-->
+<!--        <set>-->
+<!--            <if test="title != null">title = #{title},</if>-->
+<!--            <if test="term != null">term = #{term},</if>-->
+<!--            <if test="status != null">status = #{status},</if>-->
+<!--            <if test="teacher != null">teacher_id = #{teacher.id},</if>-->
+<!--        </set>-->
+<!--        where id = #{id}-->
+<!--    </update>-->
 
-    <delete id="deleteById">
-        delete from `course` where id = #{id}
-    </delete>
+<!--    <delete id="deleteById">-->
+<!--        delete from `course` where id = #{id}-->
+<!--    </delete>-->
 
-    <select id="findAll" resultMap="courseResultMap">
-        select c.* from `course` c
-        <if test="teacher != null and teacher.name != null and teacher.name != ''">
-            inner join `teacher` t on c.teacher_id = t.id
-        </if>
-        <where>
-            <if test="title != null and title != ''">
-                and c.title like concat('%', #{title}, '%')
-            </if>
-            <if test="term != null and term != ''">
-                and c.term like concat('%', #{term}, '%')
-            </if>
-            <if test="teacher != null and teacher.name != null and teacher.name != ''">
-                and t.name like concat('%', #{teacher.name}, '%')
-            </if>
-        </where>
-    </select>
+<!--    <select id="findAll" resultMap="courseResultMap">-->
+<!--        select c.* from `course` c-->
+<!--        <if test="teacher != null and teacher.name != null and teacher.name != ''">-->
+<!--            inner join `teacher` t on c.teacher_id = t.id-->
+<!--        </if>-->
+<!--        <where>-->
+<!--            <if test="title != null and title != ''">-->
+<!--                and c.title like concat('%', #{title}, '%')-->
+<!--            </if>-->
+<!--            <if test="term != null and term != ''">-->
+<!--                and c.term like concat('%', #{term}, '%')-->
+<!--            </if>-->
+<!--            <if test="teacher != null and teacher.name != null and teacher.name != ''">-->
+<!--                and t.name like concat('%', #{teacher.name}, '%')-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
 
-    <select id="findByStatus" resultMap="courseResultMap">
-        select *
-        from `course`
-        where status = #{status,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}
-    </select>
+<!--    <select id="findByStatus" resultMap="courseResultMap">-->
+<!--        select *-->
+<!--        from `course`-->
+<!--        where status = #{status,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}-->
+<!--    </select>-->
 
 </mapper>

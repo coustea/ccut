@@ -2,6 +2,7 @@ package com.example.Controller;
 
 import com.example.entity.Admin;
 import com.example.entity.ApiResult;
+import com.example.entity.Student;
 import com.example.service.AdminService;
 import com.example.utils.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,4 +28,43 @@ public class AdminController {
             return ApiResultHandler.buildApiResult(200, "请求成功", admin1);
         }
     }
+
+
+    @PutMapping("/{id}")
+    public ApiResult updateAdmin(@RequestBody Admin admin) {
+        int res = adminService.updateAdmin(admin);
+        if (res == 1){
+            return ApiResultHandler.buildApiResult(200,"更新成功",admin);
+        }
+        else {
+            return ApiResultHandler.buildApiResult(400,"更新失败",null);
+        }
+    }
+
+
+    @DeleteMapping("/{id}")
+    public ApiResult deleteAdmin(@PathVariable Integer id) {
+        int res = adminService.deleteAdmin(id);
+        if (res == 1){
+            return ApiResultHandler.buildApiResult(200, "删除成功", null);
+        }else {
+            return ApiResultHandler.buildApiResult(400,"删除失败",null);
+        }
+
+    }
+
+
+    @PostMapping
+    public ApiResult addAdmin(@RequestBody Admin admin){
+        int res = adminService.addAdmin(admin);
+        if (res == 1){
+            return ApiResultHandler.buildApiResult(200,"添加成功",admin);
+        }
+        else {
+            return ApiResultHandler.buildApiResult(400,"添加失败",null);
+        }
+    }
+
+
+
 }
