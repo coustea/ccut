@@ -13,12 +13,11 @@
         <result property="status" column="status" typeHandler="org.apache.ibatis.type.EnumTypeHandler"
                 jdbcType="INTEGER" javaType="com.example.entity.LearningProgress$Status"/>
 
-        <association property="student" column="student_id"
-                     select="com.example.mapper.StudentMapper.findById" fetchType="lazy"/>
-        <association property="course" column="course_id"
-                     select="com.example.mapper.CourseMapper.findById" fetchType="lazy"/>
+        <association property="id" column="student_id"
+                     select="com.example.mapper.StudentMapper.selectById" fetchType="lazy"/>
+        <association property="id" column="course_id"
+                     select="com.example.mapper.CourseMapper.selectById" fetchType="lazy"/>
     </resultMap>
-
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         insert into `learning_progress`
             (student_id, course_id, completion_percentage, status)
@@ -41,17 +40,26 @@
         where id = #{id}
     </update>
 
-    <select id="findAll" resultMap="LearningResultMap">
-        select * from `learning_progress`
-    </select>
-
-    <select id="findByStudentId" resultMap="LearningResultMap">
-        select * from `learning_progress` where student_id = #{studentId}
-    </select>
-
     <select id="findByStudentIdAndCourseId" resultMap="LearningResultMap">
-        select * from `learning_progress`
-        where student_id = #{studentId} and course_id = #{courseId}
+        select lp.*,c.title,t.name
+        from `learning_progress` lp
+        join
+            `course` c on lp.course_id = c.id
+        left join
+            `teacher` t on c.teacher_id = t.id
+        where
+            lp.student_id = #{studentId} and lp.course_id = #{courseId}
         limit 1
+    </select>
+
+    <select id="findByStudentId" resultType="com.example.entity.LearningProgress">
+        select lp.*,c.title,t.name
+        from `learning_progress` lp
+        join
+            `course` c on lp.course_id = c.id
+        left join
+            `teacher` t on c.teacher_id = t.id
+        where
+            lp.student_id = #{studentId}
     </select>
 </mapper>

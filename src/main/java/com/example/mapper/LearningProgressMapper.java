@@ -12,8 +12,6 @@ public interface LearningProgressMapper {
 
     int updateById(LearningProgress learningProgress);
 
-    List<LearningProgress> findAll(LearningProgress learningProgress);
-
     List<LearningProgress> findByStudentId(@Param("studentId") Long studentId);
 
     Optional<LearningProgress> findByStudentIdAndCourseId(

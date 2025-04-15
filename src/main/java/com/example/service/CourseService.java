@@ -28,7 +28,7 @@ public class CourseService {
         courseMapper.updateById(course);
 
     }
-    //分页查询
+    //分页查询 根据课程名、学期、教师姓名模糊查询
     public PageInfo<Course> selectPage(Integer pageNum, Integer pageSize, Course course) {
         PageHelper.startPage(pageNum,pageSize);
         List<Course> list = courseMapper.findAll(course);

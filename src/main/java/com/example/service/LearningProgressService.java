@@ -23,10 +23,7 @@ public class LearningProgressService {
         learningProgressMapper.updateById(learningProgress);
 
     }
-    //查看学习进度记录
-    public List<LearningProgress> findAll(LearningProgress learningProgress) {
-        return learningProgressMapper.findAll(learningProgress);
-    }
+    //查看学习进度信息、课程名称、教师姓名
     public List<LearningProgress> findByStudentId(Long studentId) {
         return learningProgressMapper.findByStudentId(studentId);
     }

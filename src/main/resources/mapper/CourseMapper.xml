@@ -11,8 +11,8 @@
         <result property="status" column="status" typeHandler="com.example.utils.StatusTypeHandler"/>
         <result property="teacherId" column="teacher_id"/>
 
-        <association property="teacher" column="teacher_id"
-                     select="com.example.mapper.TeacherMapper.findById" fetchType="lazy"/>
+        <association property="id" column="teacher_id"
+                     select="com.example.mapper.TeacherMapper.selectById" fetchType="lazy"/>
     </resultMap>
 
     <insert id="insert">
@@ -36,16 +36,19 @@
     </delete>
 
     <select id="findAll" resultMap="courseResultMap">
-        select * from `course`
+        select c.* from `course` c
+        <if test="teacher != null and teacher.name != null and teacher.name != ''">
+            inner join `teacher` t on c.teacher_id = t.id
+        </if>
         <where>
             <if test="title != null and title != ''">
-                and title like concat('%', #{title}, '%')
+                and c.title like concat('%', #{title}, '%')
             </if>
             <if test="term != null and term != ''">
-                and term like concat('%', #{term}, '%')
+                and c.term like concat('%', #{term}, '%')
             </if>
-            <if test="teacher != null">
-                and teacher_id = #{teacher.id}
+            <if test="teacher != null and teacher.name != null and teacher.name != ''">
+                and t.name like concat('%', #{teacher.name}, '%')
             </if>
         </where>
     </select>
