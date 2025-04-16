@@ -1,6 +1,7 @@
 package com.example.Controller;
 
 import com.example.entity.*;
+import com.example.exception.CustomerException;
 import com.example.service.AdminService;
 import com.example.service.StudentService;
 import com.example.service.TeacherService;
@@ -28,26 +29,19 @@ public class LoginController {
 
     @PostMapping
     public ApiResult login(@RequestBody User user) {
-        String u_name = user.getName();
-        String password = user.getPassword();
 
-        User admin = adminService.login((Admin)user);
-        if (admin != null){
+        if("admin".equals(user.getRole())){
+            Admin admin = adminService.login(user);
             return ApiResultHandler.success("登录成功",admin);
-        }
-
-        Teacher teacher = teacherService.login((Teacher) user);
-        if (teacher != null){
+        }else if("teacher".equals(user.getRole())){
+            Teacher teacher = teacherService.login(user);
             return ApiResultHandler.success("登录成功",teacher);
+        }else if("student".equals(user.getRole())){
+            Student student = studentService.login(user);
+            return ApiResultHandler.success("登录成功",student);
+        }else{
+            return ApiResultHandler.buildApiResult(500,"登录失败",null);
         }
-
-        Student student = studentService.login((Student) user);
-        if (student != null){
-            return ApiResultHandler.success("登录成功",user);
-        }
-        return ApiResultHandler.buildApiResult(500,"登录失败",null);
     }
-
-
 
 }
