@@ -13,9 +13,9 @@
         <result property="status" column="status" typeHandler="org.apache.ibatis.type.EnumTypeHandler"
                 jdbcType="INTEGER" javaType="com.example.entity.LearningProgress$Status"/>
 
-        <association property="id" column="student_id"
+        <association property="student" column="student_id"
                      select="com.example.mapper.StudentMapper.selectById" fetchType="lazy"/>
-        <association property="id" column="course_id"
+        <association property="course" column="course_id"
                      select="com.example.mapper.CourseMapper.selectById" fetchType="lazy"/>
     </resultMap>
     <insert id="insert" useGeneratedKeys="true" keyProperty="id">

@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Teacher;
+import com.example.entity.User;
 import com.example.exception.CustomerException;
 import com.example.mapper.TeacherMapper;
 import com.example.utils.TakenUtils;
@@ -18,13 +19,13 @@ public class TeacherService {
     TeacherMapper teacherMapper;
 
     //教师登陆
-    public Teacher login(Teacher teacher) {
-        Teacher dbTeacher = teacherMapper.selectByUsername(teacher.getUsername());
+    public Teacher login(User user) {
+        Teacher dbTeacher = teacherMapper.selectByUsername(user.getUsername());
         if(dbTeacher == null){
             throw new CustomerException("账号不存在！");
         }
 
-        if(!dbTeacher.getPassword().equals(teacher.getPassword())){
+        if(!dbTeacher.getPassword().equals(user.getPassword())){
             throw new CustomerException("账号或密码错误");
         }
 

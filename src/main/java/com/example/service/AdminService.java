@@ -1,6 +1,7 @@
 package com.example.service;
 
 import com.example.entity.Admin;
+import com.example.entity.User;
 import com.example.exception.CustomerException;
 import com.example.mapper.AdminMapper;
 import com.example.utils.TakenUtils;
@@ -19,13 +20,13 @@ public class AdminService {
     AdminMapper adminMapper;
 
     //管理员登陆
-    public Admin login(Admin admin) {
-        Admin dbAdmin = adminMapper.selectByUsername(admin.getUsername());
+    public Admin login(User user) {
+        Admin dbAdmin = adminMapper.selectByUsername(user.getUsername());
         if(dbAdmin == null){
             throw new CustomerException("账号不存在！");
         }
 
-        if(!dbAdmin.getPassword().equals(admin.getPassword())){
+        if(!dbAdmin.getPassword().equals(user.getPassword())){
             throw new CustomerException("账号或密码错误");
         }
 
