@@ -20,6 +20,8 @@ spring:
     url: jdbc:mysql://localhost:3306/domainapplications?useSSL=false&serverTimezone=UTC
     username: root
     password: 1226
-
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-handlers-package: com.example.utils
+  configuration:
+    default-enum-type-handler: com.example.utils.StatusTypeHandler

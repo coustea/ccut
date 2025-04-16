@@ -11,7 +11,7 @@
         <result property="status" column="status" typeHandler="com.example.utils.StatusTypeHandler"/>
         <result property="teacherId" column="teacher_id"/>
 
-        <association property="id" column="teacher_id"
+        <association property="teacher" column="teacher_id"
                      select="com.example.mapper.TeacherMapper.selectById" fetchType="lazy"/>
     </resultMap>
 
@@ -56,7 +56,7 @@
     <select id="findByStatus" resultMap="courseResultMap">
         select *
         from `course`
-        where status = #{status,typeHandler=org.apache.ibatis.type.EnumOrdinalTypeHandler}
+        where status = #{status, typeHandler=com.example.utils.StatusTypeHandler}
     </select>
 
 </mapper>
