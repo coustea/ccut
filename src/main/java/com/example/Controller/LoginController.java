@@ -1,36 +1,53 @@
 package com.example.Controller;
 
-import com.example.entity.ApiResult;
-import com.example.entity.Student;
-import com.example.entity.User;
+import com.example.entity.*;
+import com.example.service.AdminService;
 import com.example.service.StudentService;
+import com.example.service.TeacherService;
 import com.example.utils.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("/")
+@RestController
+@RequestMapping("/login")
 public class LoginController {
 
     @Autowired
     private StudentService studentService;
 
-    @PostMapping
-    public ApiResult login(@RequestBody Student student){
+    @Autowired
+    private TeacherService teacherService;
 
-        if (student == null){
-            return ApiResultHandler.buildApiResult(400,"请求失败",null);
+    @Autowired
+    private AdminService adminService;
+
+
+    @PostMapping
+    public ApiResult login(@RequestBody User user) {
+        String u_name = user.getName();
+        String password = user.getPassword();
+
+        User admin = adminService.login((Admin)user);
+        if (admin != null){
+            return ApiResultHandler.success("登录成功",admin);
         }
-        Student student1 = studentService.login(student);
-        if (student1 == null){
-            return ApiResultHandler.buildApiResult(400,"请求失败",null);
+
+        Teacher teacher = teacherService.login((Teacher) user);
+        if (teacher != null){
+            return ApiResultHandler.success("登录成功",teacher);
         }
-        else {
-            return ApiResultHandler.buildApiResult(200,"请求成功",student1);
+
+        Student student = studentService.login((Student) user);
+        if (student != null){
+            return ApiResultHandler.success("登录成功",user);
         }
+        return ApiResultHandler.buildApiResult(500,"登录失败",null);
     }
+
+
 
 }

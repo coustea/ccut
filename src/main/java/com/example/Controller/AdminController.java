@@ -31,7 +31,7 @@ public class AdminController {
 
 
     @PutMapping("/{id}")
-    public ApiResult updateAdmin(@RequestBody Admin admin) {
+    public ApiResult update(@RequestBody Admin admin) {
         int res = adminService.updateAdmin(admin);
         if (res == 1){
             return ApiResultHandler.buildApiResult(200,"更新成功",admin);
@@ -43,7 +43,7 @@ public class AdminController {
 
 
     @DeleteMapping("/{id}")
-    public ApiResult deleteAdmin(@PathVariable Integer id) {
+    public ApiResult delete(@PathVariable Integer id) {
         int res = adminService.deleteAdmin(id);
         if (res == 1){
             return ApiResultHandler.buildApiResult(200, "删除成功", null);
@@ -55,7 +55,7 @@ public class AdminController {
 
 
     @PostMapping
-    public ApiResult addAdmin(@RequestBody Admin admin){
+    public ApiResult add(@RequestBody Admin admin){
         int res = adminService.addAdmin(admin);
         if (res == 1){
             return ApiResultHandler.buildApiResult(200,"添加成功",admin);

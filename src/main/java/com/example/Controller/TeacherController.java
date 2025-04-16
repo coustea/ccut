@@ -18,7 +18,7 @@ public class TeacherController {
 
 
     @PutMapping("/{id}")
-    public ApiResult updateTeacher(@RequestBody Teacher teacher) {
+    public ApiResult update(@RequestBody Teacher teacher) {
         int res = teacherService.updateTeacher(teacher);
         if (res == 1){
             return ApiResultHandler.buildApiResult(200,"更新成功",teacher);
@@ -30,7 +30,7 @@ public class TeacherController {
 
 
     @DeleteMapping("/{id}")
-    public ApiResult deleteTeacher(@PathVariable Integer id) {
+    public ApiResult delete(@PathVariable Integer id) {
         int res = teacherService.deleteTeacher(id);
         if (res == 1){
             return ApiResultHandler.buildApiResult(200, "删除成功", null);
@@ -42,7 +42,7 @@ public class TeacherController {
 
 
     @PostMapping
-    public ApiResult addTeacher(@RequestBody Teacher teacher){
+    public ApiResult add(@RequestBody Teacher teacher){
         int res = teacherService.addTeacher(teacher);
         if (res == 1){
             return ApiResultHandler.buildApiResult(200,"添加成功",teacher);
