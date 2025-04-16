@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/student")
 public class StudentController {
     @Autowired
@@ -40,14 +40,16 @@ public class StudentController {
 
 
     @PostMapping
-    public ApiResult addStudent(@RequestBody Student student){
-        int res = studentService.addStudent(student);
-        if (res == 1){
-            return ApiResultHandler.buildApiResult(200,"添加成功",student);
-        }
-        else {
-            return ApiResultHandler.buildApiResult(400,"添加失败",null);
+    public ApiResult<String> addStudent(@RequestBody Student student){
+        try {
+            if (student == null) {
+                return ApiResultHandler.buildApiResult(400, "学生列表不能为空", null);
+            }
+            int affectedRows = studentService.addStudent(student);
+            return ApiResultHandler.buildApiResult(200,"插入成功",student);
+
+        } catch (Exception e) {
+            return ApiResultHandler.buildApiResult(500, "插入失败", null);
         }
     }
-
 }

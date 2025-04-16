@@ -13,12 +13,12 @@ public interface TeacherMapper {
     @Select("select * from `teacher` where username = #{username}")
     Teacher selectByUsername(String username);
 
-    void insert(Teacher teacher);
+    int insert(Teacher teacher);
 
     @Delete("delete  from `teacher` where id = #{id}")
-    void delete(Integer id);
+    int delete(Integer id);
 
-    void updateById(Teacher teacher);
+    int updateById(Teacher teacher);
 
     List<Teacher> selectAll(Teacher teacher);
 

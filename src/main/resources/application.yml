@@ -7,21 +7,22 @@
 
 
 
-#spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: jdbc:mysql://localhost:3307/ccut?useSSL=false&serverTimezone=UTC
-#    username: root
-#    password: 206719
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/domainapplications?useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://localhost:3307/ccut?useSSL=false&serverTimezone=UTC
     username: root
-    password: 1226
+    password: 206719
+
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/domainapplications?useSSL=false&serverTimezone=UTC
+#    username: root
+#    password: 1226
+
 mybatis:
-  mapper-locations: classpath*:mapper/**/*.xml
-  type-handlers-package: com.example.utils
-  configuration:
-    default-enum-type-handler: com.example.utils.StatusTypeHandler
+  mapper-locations: classpath:mapper/*.xml
+logging:
+  level:
+    com.example.mapper: DEBUG
