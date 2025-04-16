@@ -15,12 +15,13 @@
 
               <v-card-text>
                 <v-form @submit.prevent="submit">
+                <!-- 学号登录 -->
                   <v-text-field
-                      v-model="form.email"
-                      label="邮箱"
-                      name="email"
-                      prepend-icon="mdi-email"
-                      type="email"
+                      v-model="form.studentId"
+                      label="学号"
+                      name="studentId"
+                      prepend-icon="mdi-account"
+                      type="text"
                       required
                   ></v-text-field>
 
@@ -96,7 +97,7 @@ const isLogin = ref(true);
 const loading = ref(false);
 
 const form = reactive({
-  email: '',
+  studentId: '',
   password: '',
   confirmPassword: '',
   name: '',
@@ -113,7 +114,7 @@ const submit = async () => {
   try {
     if (isLogin.value) {
       await authStore.login({
-        email: form.email,
+        studentId: form.studentId,
         password: form.password,
         role: form.role
       });
@@ -123,7 +124,7 @@ const submit = async () => {
       }
 
       await authStore.register({
-        email: form.email,
+        studentId: form.studentId,
         password: form.password,
         name: form.name,
         role: form.role
