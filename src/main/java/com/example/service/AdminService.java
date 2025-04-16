@@ -34,6 +34,13 @@ public class AdminService {
         dbAdmin.setToken(token);
         return dbAdmin;
     }
+
+    public Admin selectByName(String username){
+        return adminMapper.selectByUsername(username);
+    }
+
+
+
     //添加管理员
     public int addAdmin(Admin admin) {
 

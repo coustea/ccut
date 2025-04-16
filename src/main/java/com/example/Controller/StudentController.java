@@ -16,38 +16,49 @@ public class StudentController {
     private StudentService studentService;
 
     @PutMapping("/{id}")
-    public ApiResult updateStudent(@RequestBody Student student) {
-      int res = studentService.updateStudent(student);
-      if (res == 1){
-          return ApiResultHandler.buildApiResult(200,"更新成功",student);
-      }
-      else {
-          return ApiResultHandler.buildApiResult(400,"更新失败",null);
-      }
-    }
-
-
-    @DeleteMapping("/{id}")
-    public ApiResult deleteStudent(@PathVariable Integer id) {
-        int res = studentService.deleteStudent(id);
-        if (res == 1){
-            return ApiResultHandler.buildApiResult(200, "删除成功", null);
-        }else {
-            return ApiResultHandler.buildApiResult(400,"删除失败",null);
+    public ApiResult update(@RequestBody Student student) {
+        try {
+            int res = studentService.updateStudent(student);
+            if (res == 1){
+                return ApiResultHandler.buildApiResult(200,"更新成功",student);
+            }
+            else {
+                return ApiResultHandler.buildApiResult(500,"更新失败",null);
+            }
+        } catch (Exception e) {
+            return ApiResultHandler.buildApiResult(500,"更新失败",null);
         }
 
     }
 
 
-    @PostMapping
-    public ApiResult<String> addStudent(@RequestBody Student student){
+    @DeleteMapping("/{id}")
+    public ApiResult delete(@PathVariable Integer id) {
         try {
-            if (student == null) {
-                return ApiResultHandler.buildApiResult(400, "学生列表不能为空", null);
+            int res = studentService.deleteStudent(id);
+            if (res == 1){
+                return ApiResultHandler.success("删除成功",null);
             }
-            int affectedRows = studentService.addStudent(student);
-            return ApiResultHandler.buildApiResult(200,"插入成功",student);
+            else {
+                return ApiResultHandler.buildApiResult(500, "删除失败", null);
+            }
+        } catch (Exception e) {
+            return ApiResultHandler.buildApiResult(500, "删除失败", null);
+        }
+    }
 
+
+
+    @PostMapping
+    public ApiResult<String> add(@RequestBody Student student){
+        try {
+            int affectedRows = studentService.addStudent(student);
+            if (affectedRows == 1){
+                return ApiResultHandler.success("添加成功",student);
+            }
+            else{
+                return ApiResultHandler.buildApiResult(500, "插入失败", null);
+            }
         } catch (Exception e) {
             return ApiResultHandler.buildApiResult(500, "插入失败", null);
         }
