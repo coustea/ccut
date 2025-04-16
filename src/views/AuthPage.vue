@@ -83,12 +83,14 @@
       </v-container>
     </v-main>
   </v-app>
+
 </template>
 
 <script setup>
 import { ref, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
+import axios from '@/api/index.js';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -113,28 +115,50 @@ const submit = async () => {
 
   try {
     if (isLogin.value) {
-      await authStore.login({
+      console.log(1)
+      // 登录请求
+      const response = await axios.post('http://192.168.1.101:8080/login', {
         studentId: form.studentId,
         password: form.password,
         role: form.role
-      });
+      }
+      );
+      console.log(response.data)
+      // await axios.post('http://192.168.100.100:8000/login',form)
+      // 保存token和用户信息
+      authStore.setAuth(response.data.user, response.data.token);
+
+      // 显示登录成功提示
+      alert('登录成功');
     } else {
+      // 注册请求
       if (form.password !== form.confirmPassword) {
         throw new Error('两次输入的密码不一致');
       }
 
-      await authStore.register({
+      const response = await axios.post('/auth/register', {
         studentId: form.studentId,
         password: form.password,
         name: form.name,
         role: form.role
       });
+
+      // 保存token和用户信息
+      authStore.setAuth(response.data.user, response.data.token);
+
+      // 显示注册成功提示
+      alert('注册成功');
     }
 
     // 根据角色跳转到不同页面
-    router.push(`/${form.role}`);
+    await router.push(`/${form.role}`);
   } catch (error) {
-    alert(error.message);
+    // 更详细的错误处理
+    const errorMessage = error.response?.data?.message || error.message || '操作失败';
+    alert(errorMessage);
+
+    // 可以在这里添加更友好的错误提示方式
+    // 例如使用Toast或Snackbar组件
   } finally {
     loading.value = false;
   }

@@ -1,23 +1,22 @@
-import api from './index';
+import axios from '@/api/index.js'; // 导入配置好的axios实例
 
 export default {
-    login(credentials) {
-        return api.post('/auth/login', credentials);
+    async login(credentials) {
+        const response = await axios.post(' 192.168.1.101:8080/login', credentials);
+        return response.data; // 假设后端返回 { user, token }
     },
-    register(userData) {
-        return api.post('/auth/register', userData);
+
+    async register(userData) {
+        const response = await axios.post('/auth/register', userData);
+        return response.data;
     },
-    forgotPassword(email) {
-        return api.post('/auth/forgot-password', { email });
+
+    async logout() {
+        await axios.post('/auth/logout');
     },
-    resetPassword(data) {
-        return api.post('/auth/reset-password', data);
-    },
-    getMe() {
-        return api.get('/auth/me');
-    },
-    // 第三方登录
-    oauthLogin(provider, code) {
-        return api.post(`/auth/${provider}`, { code });
+
+    async getUserInfo() {
+        const response = await axios.get('/auth/me');
+        return response.data;
     }
 };

@@ -1,25 +1,42 @@
 import { defineStore } from 'pinia';
-import mockAuth from '@/api/mockAuth';
+import authApi from '@/api/auth';
 
 export const useAuthStore = defineStore('auth', {
     state: () => ({
         user: null,
         token: localStorage.getItem('token') || null
     }),
+
     actions: {
         async login(credentials) {
-            const response = await mockAuth.login(credentials);
-            this.user = response.user;
-            this.token = response.token;
-            localStorage.setItem('token', this.token);
+            const { user, token } = await authApi.login(credentials);
+            this.setAuth(user, token);
         },
+
         async register(userData) {
-            const response = await mockAuth.register(userData);
-            this.user = response.user;
-            this.token = response.token;
-            localStorage.setItem('token', this.token);
+            const { user, token } = await authApi.register(userData);
+            this.setAuth(user, token);
         },
-        logout() {
+
+        async logout() {
+            await authApi.logout();
+            this.clearAuth();
+        },
+
+        async fetchUser() {
+            if (this.token) {
+                this.user = await authApi.getUserInfo();
+            }
+        },
+
+        // 辅助方法
+        setAuth(user, token) {
+            this.user = user;
+            this.token = token;
+            localStorage.setItem('token', token);
+        },
+
+        clearAuth() {
             this.user = null;
             this.token = null;
             localStorage.removeItem('token');
