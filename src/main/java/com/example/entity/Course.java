@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Course {
+
+    
     @Getter
     public enum Status {
         PENDING(0), ACTIVE(1), COMPLETED(2), CANCELLED(3);

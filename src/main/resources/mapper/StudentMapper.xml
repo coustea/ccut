@@ -15,19 +15,58 @@
         where id = #{id}
     </update>
 
+<!--    <select id="selectAll" resultType="com.example.entity.Student">-->
+<!--        select * from `user`-->
+<!--        <where>-->
+<!--            <if test="username != null and username !=''">username like concat('%',#{username},'%') </if>-->
+<!--            <if test="name != null and name !=''">and name like concat('%',#{name},'%') </if>-->
+<!--            <if test="ids != null and ids != ''">-->
+<!--                and id in-->
+<!--                <foreach collection="ids" open="(" close=")" separator="," item="id" >-->
+<!--                    #{id}-->
+<!--                </foreach>-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        order by id desc-->
+<!--    </select>-->
+<!--    <select id="selectAll" resultType="com.example.entity.Student">-->
+<!--        select * from `student`-->
+<!--        <where>-->
+<!--            <if test="username != null and username !=''">username like concat('%',#{username},'%') </if>-->
+<!--            <if test="name != null and name !=''">and name like concat('%',#{name},'%') </if>-->
+<!--            <if test="id != null and ids != ''">-->
+<!--                and id in-->
+<!--                <foreach collection="id" open="(" close=")" separator="," item="id" >-->
+<!--                    #{id}-->
+<!--                </foreach>-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        order by id desc-->
+<!--    </select>-->
     <select id="selectAll" resultType="com.example.entity.Student">
-        select * from `user`
+        SELECT *
+        FROM student
         <where>
-            <if test="username != null and username !=''">username like concat('%',#{username},'%') </if>
-            <if test="name != null and name !=''">and name like concat('%',#{name},'%') </if>
-            <if test="ids != null and ids != ''">
-                and id in
-                <foreach collection="ids" open="(" close=")" separator="," item="id" >
-                    #{id}
-                </foreach>
+            <if test="username != null and username != ''">
+                AND username LIKE CONCAT('%', #{username}, '%')
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="academe != null and academe != ''">
+                AND academe LIKE CONCAT('%', #{academe}, '%')
+            </if>
+            <if test="classname != null and classname != ''">
+                AND classname LIKE CONCAT('%', #{classname}, '%')
+            </if>
+            <if test="phone != null and phone != ''">
+                AND phone LIKE CONCAT('%', #{phone}, '%')
+            </if>
+            <if test="role != null and role != ''">
+                AND role = #{role}
             </if>
         </where>
-        order by id desc
+        ORDER BY id DESC
     </select>
 
 </mapper>

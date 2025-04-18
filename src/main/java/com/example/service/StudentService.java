@@ -47,10 +47,7 @@ public class StudentService {
        return studentMapper.updateById(student);
 
     }
-    //分页查询
-    public PageInfo<Student> selectPage(Integer pageNum, Integer pageSize,Student student) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<Student> list = studentMapper.selectAll(student);
-        return PageInfo.of(list);
+    public List<Student> selectAll(Student student) {
+        return studentMapper.selectAll(student);
     }
 }

@@ -2,15 +2,21 @@ package com.example.Mapper;
 
 import com.example.entity.Student;
 import com.example.mapper.StudentMapper;
+import com.example.service.StudentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 @SpringBootTest
 public class StudentMapperTest {
 
     @Autowired
     private StudentMapper studentMapper;
+
+    @Autowired
+    private StudentService studentService;
 
     @Test
     void insert(){
@@ -27,6 +33,15 @@ public class StudentMapperTest {
             System.out.println("success");
         }else {
             System.out.println("failed");
+        }
+    }
+
+
+    @Test
+    void selectAll(){
+        List<Student> students = studentService.selectAll(null);
+        for (Student student : students) {
+            System.out.println(student);
         }
     }
 }

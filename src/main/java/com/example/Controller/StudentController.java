@@ -1,19 +1,44 @@
 package com.example.Controller;
 
+import com.example.entity.Admin;
 import com.example.entity.ApiResult;
 import com.example.entity.Student;
 import com.example.service.StudentService;
 import com.example.utils.ApiResultHandler;
 import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
     @Autowired
     private StudentService studentService;
+
+
+
+//    @GetMapping
+//    public List<Student> getAllStudent(@ModelAttribute Student student) {
+//        if (student == null) {
+//           return studentService.selectAll(null);
+//        }
+//        return studentService.selectAll(student);
+//    }
+    @GetMapping
+    public ApiResult<List<Student>> getAllStudent(@ModelAttribute Student student) {
+        try {
+            if (student == null) {
+                return ApiResultHandler.success("查询成功", studentService.selectAll(null));
+            }
+            return ApiResultHandler.success("查询成功",studentService.selectAll(student));
+        }catch (Exception e){
+            return ApiResultHandler.buildApiResult(500,"查询失败",null);
+        }
+    }
 
     @PutMapping("/{id}")
     public ApiResult update(@RequestBody Student student) {

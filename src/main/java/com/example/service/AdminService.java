@@ -38,9 +38,7 @@ public class AdminService {
     public Admin selectByName(String username){
         return adminMapper.selectByUsername(username);
     }
-
-
-
+    
     //添加管理员
     public int addAdmin(Admin admin) {
 
@@ -56,10 +54,7 @@ public class AdminService {
         return adminMapper.updateById(admin);
 
     }
-    //分页查询
-    public PageInfo<Admin> selectPage(Integer pageNum, Integer pageSize, Admin admin) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<Admin> list = adminMapper.selectAll(admin);
-        return PageInfo.of(list);
+    public List<Admin> selectAll(Admin admin) {
+        return adminMapper.selectAll(admin);
     }
 }

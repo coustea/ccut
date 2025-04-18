@@ -47,10 +47,7 @@ public class TeacherService {
        return teacherMapper.updateById(teacher);
 
     }
-    //分页查询
-    public PageInfo<Teacher> selectPage(Integer pageNum, Integer pageSize, Teacher teacher) {
-        PageHelper.startPage(pageNum,pageSize);
-        List<Teacher> list = teacherMapper.selectAll(teacher);
-        return PageInfo.of(list);
+    public List<Teacher> selectAll(Teacher teacher) {
+        return teacherMapper.selectAll(teacher);
     }
 }

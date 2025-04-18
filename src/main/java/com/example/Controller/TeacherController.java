@@ -9,6 +9,8 @@ import com.example.utils.ApiResultHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/teacher")
 public class TeacherController {
@@ -16,6 +18,17 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
+    @GetMapping
+    public ApiResult<List<Teacher>> getAllStudent(@ModelAttribute Teacher teacher) {
+        try {
+            if (teacher == null) {
+                return ApiResultHandler.success("查询成功", teacherService.selectAll(null));
+            }
+            return ApiResultHandler.success("查询成功",teacherService.selectAll(teacher));
+        }catch (Exception e){
+            return ApiResultHandler.buildApiResult(500,"查询失败",null);
+        }
+    }
 
     @PutMapping("/{id}")
     public ApiResult update(@RequestBody Teacher teacher) {
